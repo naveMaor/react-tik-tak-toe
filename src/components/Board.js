@@ -27,16 +27,12 @@ const Board = (props) => {
     ];
 
 
-    function updateCell(cell, index,color) {
-        cell.innerText = currPlayer;
-        cell.style.setProperty('color', color);
-    }
 
-    function colorWinningsCombination(winningCombination) {
+     const colorWinningsCombination = (winningCombination) => {
         const color ="red";
         winningCombination.forEach((cell) => {
-            //document.getElementById(cell).style.setProperty('color', color)
-        })
+            document.getElementById(cell).style.setProperty('color', color)
+        })    
     }
 
     const checkIfThereIsAWinner2 = (newBoard) => {
@@ -68,22 +64,19 @@ const Board = (props) => {
 
 
     const changePlayer = () => {
-        setCurrPlayer(currPlayer === player_X ? player_O : player_X);
-        setWinningMessage(`${currPlayer}'s turn`);
+        const nextPlayer = currPlayer === player_X ? player_O : player_X;
+        setCurrPlayer(nextPlayer);
+        setWinningMessage(`${nextPlayer}'s turn`);
     };
 
     function checkIfThereIsAWinner(newBoard){
-        let winningCombination = null
 
-        winningCombinations.forEach(combination => {
-            if (newBoard[combination[0] - 1] == currPlayer
-                && newBoard[combination[1] - 1] == currPlayer
-                && newBoard[combination[2] - 1] == currPlayer) {
-                winningCombination = combination
-            }
+        return winningCombinations.some(combination => {
+            return (newBoard[combination[0] - 1] === currPlayer
+                && newBoard[combination[1] - 1] === currPlayer
+                && newBoard[combination[2] - 1] === currPlayer)
         });
 
-        return winningCombination
     }
 
     function initGame() {
